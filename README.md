@@ -27,7 +27,7 @@ src/
   assets/main.css      Tailwind import + theme tokens (colours, radius, type scale, font)
 ```
 
-Data flows in one direction: `apiAgent` (HTTP), then `queries/` (caching and loading/error state), then `HomeView` (filters and selection), then components (props in, events out). `TransactionsTable` does no fetching or filtering. It receives the rows and state as props, emits `select`, `retry` and `clear-filters`, and takes the filter controls through a slot, so it can be mounted in tests with plain arrays.
+Data flows in one direction: `apiAgent` (HTTP), then `queries/` (caching and loading/error state), then `HomeView` (filters and selection), then components (props in, events out).
 
 ## Technical decisions
 
