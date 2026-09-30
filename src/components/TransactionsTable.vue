@@ -1,0 +1,130 @@
+<script setup>
+import { amountClass, formatDate, formatTime, headerClass, signedAmount } from '@/helpers/utils'
+import BaseCard from '@/components/BaseCard.vue'
+import SkeletonBlock from '@/components/SkeletonBlock.vue'
+import StatusBadge from '@/components/StatusBadge.vue'
+import { TRANSACTION_COLUMNS } from '@/config/transactionsTable'
+
+defineProps({
+  transactions: { type: Array, default: () => [] },
+  totalCount: { type: Number, default: 0 },
+  loading: { type: Boolean, default: false },
+  error: { type: Boolean, default: false },
+  retrying: { type: Boolean, default: false },
+  title: { type: String, default: '' },
+})
+
+const emit = defineEmits(['retry', 'clear-filters', 'select'])
+</script>
+
+<template>
+  <BaseCard aria-labelledby="transactions-heading">
+    <header class="flex flex-col gap-4 border-b border-border px-5 py-4 sm:px-6">
+      <div class="flex items-baseline justify-between gap-3">
+        <h2 id="transactions-heading" class="text-lg font-lg">{{ title }}</h2>
+        <p v-if="!loading && !error" class="text-xs text-muted" aria-live="polite">
+          Showing {{ transactions.length }} of {{ totalCount }}
+        </p>
+      </div>
+      <slot name="table-filters" />
+    </header>
+
+    <div v-if="error" class="flex items-center gap-3 px-5 py-6 text-sm sm:px-6">
+      <span class="text-danger">Couldn't load transactions.</span>
+      <button
+        type="button"
+        class="rounded-md border border-border px-3 py-1 font-md hover:bg-background disabled:opacity-60"
+        :disabled="retrying"
+        @click="emit('retry')"
+      >
+        {{ retrying ? 'Retrying…' : 'Retry' }}
+      </button>
+    </div>
+
+    <div v-else class="overflow-x-auto">
+      <table class="w-full overflow-hidden min-w-180 text-left text-sm">
+        <thead class="text-xs text-muted">
+          <tr class="border-b border-border">
+            <th
+              v-for="(column, index) in TRANSACTION_COLUMNS"
+              :key="column.key"
+              scope="col"
+              class="py-3 font-md"
+              :class="headerClass(column, index, TRANSACTION_COLUMNS.length)"
+            >
+              {{ column.label }}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody v-if="loading">
+          <tr v-for="n in 6" :key="n" class="border-b border-border last:border-0">
+            <td class="px-5 py-4 sm:px-6">
+              <SkeletonBlock class="h-4 w-36" />
+              <SkeletonBlock class="mt-1.5 h-3 w-20" />
+            </td>
+            <td class="px-3 py-4">
+              <SkeletonBlock class="h-4 w-24" /> <SkeletonBlock class="mt-1.5 h-3 w-10" />
+            </td>
+            <td class="px-3 py-4"><SkeletonBlock class="h-4 w-12" /></td>
+            <td class="px-3 py-4"><SkeletonBlock class="h-5 w-20 rounded-pill" /></td>
+
+            <td class="px-3 py-4"><SkeletonBlock class="ml-auto h-4 w-20" /></td>
+            <td class="px-5 py-4 sm:px-6"><SkeletonBlock class="h-4 w-10" /></td>
+          </tr>
+        </tbody>
+
+        <tbody v-else-if="transactions.length">
+          <tr
+            v-for="t in transactions"
+            :key="t.id"
+            tabindex="0"
+            :aria-label="'View details for ' + t.merchant"
+            class="cursor-pointer border-b border-border last:border-0 hover:bg-background focus-visible:bg-primary-50 focus-visible:outline-none"
+            @click="emit('select', t)"
+            @keydown.enter="emit('select', t)"
+            @keydown.space.prevent="emit('select', t)"
+          >
+            <td class="px-5 py-3 sm:px-6">
+              <div class="font-md text-foreground">{{ t.merchant }}</div>
+              <div class="text-xs text-muted">{{ t.category }}</div>
+            </td>
+            <td class="px-3 py-3 whitespace-nowrap">
+              <time :datetime="t.date">{{ formatDate(t.date) }}</time>
+              <div class="text-xs text-muted">{{ formatTime(t.date) }}</div>
+            </td>
+            <td class="px-3 py-3 capitalize">{{ t.type }}</td>
+            <td class="px-3 py-3"><StatusBadge :status="t.status" /></td>
+            <td class="px-3 py-3 text-right font-md whitespace-nowrap" :class="amountClass(t)">
+              {{ signedAmount(t) }}
+            </td>
+            <td class="px-5 py-3 text-muted sm:px-6">{{ t.currency }}</td>
+          </tr>
+        </tbody>
+
+        <tbody v-else-if="totalCount > 0">
+          <tr>
+            <td :colspan="TRANSACTION_COLUMNS.length" class="px-6 py-10 text-center">
+              <p class="font-md text-foreground">No transactions match your filters.</p>
+              <button
+                type="button"
+                class="mt-2 text-sm font-md text-primary-700 hover:underline"
+                @click="emit('clear-filters')"
+              >
+                Clear filters
+              </button>
+            </td>
+          </tr>
+        </tbody>
+
+        <tbody v-else>
+          <tr>
+            <td :colspan="TRANSACTION_COLUMNS.length" class="px-6 py-10 text-center text-muted">
+              No transactions yet.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </BaseCard>
+</template>

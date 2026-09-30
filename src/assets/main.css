@@ -1,36 +1,68 @@
 @import 'tailwindcss';
-@import './base.css';
+@import '@fontsource-variable/inter';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+@theme {
+  /* Brand */
+  --color-primary-50: #eef4ff;
+  --color-primary-100: #d9e6ff;
+  --color-primary-200: #bcd3ff;
+  --color-primary-300: #8eb6ff;
+  --color-primary-400: #598dff;
+  --color-primary-500: #3366ff;
+  --color-primary-600: #1f47f5;
+  --color-primary-700: #1835e1;
+  --color-primary-800: #1a2db6;
+  --color-primary-900: #1c2c8f;
+
+  /* Surfaces & text */
+  --color-background: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-border: #e4e7ec;
+  --color-foreground: #101828;
+  --color-muted: #667085;
+
+  /* Semantic — credit/debit and transaction status */
+  --color-success: #12b76a;
+  --color-success-soft: #ecfdf3;
+  --color-warning: #f79009;
+  --color-warning-soft: #fffaeb;
+  --color-danger: #f04438;
+  --color-danger-soft: #fef3f2;
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-card: 0.75rem;
+  --radius-pill: 9999px;
+
+  /* Text sizes — each sets font-size plus a matching line-height */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-md: 1rem;
+  --text-md--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+
+  /* Font families — font-sans (default) and font-mono (amounts, references) */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Font weights — font-xs … font-xl */
+  --font-weight-xs: 300;
+  --font-weight-sm: 400;
+  --font-weight-md: 500;
+  --font-weight-lg: 600;
+  --font-weight-xl: 700;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
+@layer base {
   body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    @apply bg-background text-foreground antialiased;
   }
 }

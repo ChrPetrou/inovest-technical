@@ -1,0 +1,122 @@
+{
+  "merchants": [
+    {
+      "value": "Acme Corp",
+      "label": "Acme Corp"
+    },
+    {
+      "value": "Alphamega",
+      "label": "Alphamega"
+    },
+    {
+      "value": "Amazon",
+      "label": "Amazon"
+    },
+    {
+      "value": "Apple",
+      "label": "Apple"
+    },
+    {
+      "value": "Booking.com",
+      "label": "Booking.com"
+    },
+    {
+      "value": "Cyta",
+      "label": "Cyta"
+    },
+    {
+      "value": "EAC Electricity",
+      "label": "EAC Electricity"
+    },
+    {
+      "value": "Freelance Client Ltd",
+      "label": "Freelance Client Ltd"
+    },
+    {
+      "value": "Landlord — N. Christou",
+      "label": "Landlord — N. Christou"
+    },
+    {
+      "value": "Maria Georgiou",
+      "label": "Maria Georgiou"
+    },
+    {
+      "value": "Netflix",
+      "label": "Netflix"
+    },
+    {
+      "value": "Ryanair",
+      "label": "Ryanair"
+    },
+    {
+      "value": "Shell",
+      "label": "Shell"
+    },
+    {
+      "value": "Spotify",
+      "label": "Spotify"
+    },
+    {
+      "value": "Starbucks",
+      "label": "Starbucks"
+    },
+    {
+      "value": "Steam",
+      "label": "Steam"
+    },
+    {
+      "value": "Uber",
+      "label": "Uber"
+    },
+    {
+      "value": "Wolt",
+      "label": "Wolt"
+    },
+    {
+      "value": "Zara",
+      "label": "Zara"
+    }
+  ],
+  "statuses": [
+    {
+      "value": "completed",
+      "label": "Completed"
+    },
+    {
+      "value": "pending",
+      "label": "Pending"
+    },
+    {
+      "value": "declined",
+      "label": "Declined"
+    }
+  ],
+  "types": [
+    {
+      "value": "credit",
+      "label": "Credit"
+    },
+    {
+      "value": "debit",
+      "label": "Debit"
+    }
+  ],
+  "sortOptions": [
+    {
+      "value": "date-desc",
+      "label": "Newest first"
+    },
+    {
+      "value": "date-asc",
+      "label": "Oldest first"
+    },
+    {
+      "value": "amount-desc",
+      "label": "Amount: high to low"
+    },
+    {
+      "value": "amount-asc",
+      "label": "Amount: low to high"
+    }
+  ]
+}

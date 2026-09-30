@@ -18,6 +18,18 @@ export default defineConfig([
     languageOptions: {
       globals: {
         ...globals.browser,
+        // Replaced at build time by the process-env plugin in vite.config.js
+        process: 'readonly',
+      },
+    },
+  },
+
+  {
+    name: 'app/node-config-files',
+    files: ['*.config.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
       },
     },
   },
