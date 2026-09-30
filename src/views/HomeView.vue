@@ -38,6 +38,7 @@ function closeModal() {
 
 <template>
   <div class="flex flex-col gap-6">
+    <h1 class="sr-only">Dashboard</h1>
     <AccountSummary />
     <TransactionsTable
       :title="'Recent Transactions'"

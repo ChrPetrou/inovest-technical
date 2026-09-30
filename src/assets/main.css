@@ -63,6 +63,10 @@
 
 @layer base {
   body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
     @apply bg-background text-foreground antialiased;
   }
 }
