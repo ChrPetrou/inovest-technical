@@ -3,9 +3,11 @@ export function formatMoney(amount, currency, locale = 'en-GB') {
 }
 
 export function formatDate(iso, locale = 'en-GB') {
-  return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', year: 'numeric' }).format(
-    new Date(iso),
-  )
+  return new Intl.DateTimeFormat(locale, {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(iso))
 }
 
 export function formatTime(iso, locale = 'en-GB') {
@@ -24,7 +26,6 @@ export function amountClass(transaction) {
   return transaction.type === 'credit' ? 'text-success' : 'text-foreground'
 }
 
-// Empty string means "no filter" for that field.
 export const DEFAULT_FILTERS = Object.freeze({
   merchant: '',
   status: '',
@@ -32,7 +33,6 @@ export const DEFAULT_FILTERS = Object.freeze({
   sort: 'date-desc',
 })
 
-// Clears merchant/status/type but keeps the chosen sort order.
 export function clearFilters(filters) {
   return { ...DEFAULT_FILTERS, sort: filters.sort }
 }
@@ -50,7 +50,6 @@ export function filterTransactions(transactions, { merchant, status, type }) {
   )
 }
 
-// Sorting by amount compares the raw number, regardless of currency.
 export function sortTransactions(transactions, sort) {
   const [field, direction] = sort.split('-')
   const factor = direction === 'asc' ? 1 : -1
@@ -62,7 +61,6 @@ export function applyFilters(transactions, filters) {
   return sortTransactions(filterTransactions(transactions, filters), filters.sort)
 }
 
-// First and last columns line up with the card's padding.
 export function headerClass(column, index, columnCount) {
   const edge = index === 0 || index === columnCount - 1
   return [edge ? 'px-5 sm:px-6' : 'px-3', column.align === 'right' ? 'text-right' : 'text-left']
@@ -86,7 +84,6 @@ function capitalize(value) {
   return value ? value[0].toUpperCase() + value.slice(1) : value
 }
 
-// Label/value rows for the transaction details view. Empty fields are left out.
 export function transactionDetailRows(transaction) {
   return [
     { label: 'Date', value: formatDateTime(transaction.date) },

@@ -5,10 +5,8 @@ import SkeletonBlock from '@/components/SkeletonBlock.vue'
 import StatusBadge from '@/components/StatusBadge.vue'
 import { TRANSACTION_COLUMNS } from '@/config/transactionsTable'
 
-// Presentational only: the parent fetches, filters and sorts, then passes rows in.
 defineProps({
   transactions: { type: Array, default: () => [] },
-  // Count before filtering, used for 'Showing X of Y' and to tell 'no results' from 'no data'.
   totalCount: { type: Number, default: 0 },
   loading: { type: Boolean, default: false },
   error: { type: Boolean, default: false },
@@ -46,7 +44,6 @@ const emit = defineEmits(['retry', 'clear-filters', 'select'])
     <template v-else-if="loading || transactions.length">
       <span v-if="loading" class="sr-only">Loading transactions…</span>
 
-      <!-- Phones: stacked list, one tappable card per transaction -->
       <ul class="divide-y divide-border sm:hidden">
         <template v-if="loading">
           <li v-for="n in 6" :key="n" class="flex items-center justify-between gap-4 px-5 py-3">
@@ -80,7 +77,6 @@ const emit = defineEmits(['retry', 'clear-filters', 'select'])
         </li>
       </ul>
 
-      <!-- sm and up: full table -->
       <div class="hidden overflow-x-auto sm:block">
         <table class="w-full min-w-180 text-left text-sm">
           <thead class="text-xs text-muted">
@@ -115,7 +111,6 @@ const emit = defineEmits(['retry', 'clear-filters', 'select'])
           </tbody>
 
           <tbody v-else>
-            <!-- Rows open the details; tabindex + Enter/Space make that work from the keyboard too -->
             <tr
               v-for="t in transactions"
               :key="t.id"
@@ -126,7 +121,6 @@ const emit = defineEmits(['retry', 'clear-filters', 'select'])
               @keydown.enter="emit('select', t)"
               @keydown.space.prevent="emit('select', t)"
             >
-              <!-- Long names are cut with an ellipsis; the full text is in the tooltip and the details -->
               <td class="max-w-64 px-5 py-3 sm:px-6">
                 <div class="truncate font-md text-foreground" :title="t.merchant">
                   {{ t.merchant }}
@@ -154,7 +148,6 @@ const emit = defineEmits(['retry', 'clear-filters', 'select'])
       </div>
     </template>
 
-    <!-- Filters hid everything: different from having no transactions at all -->
     <div v-else-if="totalCount > 0" class="px-6 py-10 text-center">
       <p class="font-md text-foreground">No transactions match your filters.</p>
       <button
